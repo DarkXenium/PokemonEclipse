@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pok&eacute;mon Eclipse</title>
+</head>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Goldman:wght@700&display=swap" rel="stylesheet">
+<link rel="shortcut icon" href="images/logo4.png" type="image/x-icon">
+
+<body>
+    <audio src="fight.mp3"></audio>
+    <button id="button">
+        <i class="fas fa-volume-up"></i>
+        <image src="images/sound.gif">Enable/Disable Sound!</image>
+    </button>
+
+</html>
+
+<header class="header">
+    <div class="left">
+        <img src="images/logo4.png" alt="logo">
+    </div>
+    <table class='table'>
+        <tr>
+            <td id='hp1'></td>
+            <td id='hp2'></td>
+        </tr>
+        <tr>
+            <td id='pk1'></td>
+            <td id='pk2'></td>
+        </tr>
+        <tr>
+            <td colspan='2' id='comment'></td>
+        </tr>
+        <tr>
+            <td>
+                <input type='button' class='btn' id='m0'>
+                <input type='button' class='btn' id='m1'>
+                <input type='button' class='btn' id='m2'>
+                <input type='button' class='btn' id='m3'>
+            </td>
+        </tr>
+    </table>
+
+    </body>
+
+    <style>
+        audio {
+            display: none;
+        }
+
+        button {
+            font-size: 16px;
+            color: rgb(1, 1, 82);
+            text-shadow: 2px 2px 1px rgb(255, 72, 0);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0px;
+            padding: 15px;
+            border: none;
+            border-radius: 2px;
+            outline: none;
+            background: rgba(115, 67, 167, 0);
+            /* box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); */
+            opacity: 1;
+            height: 0px;
+            cursor: pointer;
+            transition: all 0.4s ease-out;
+        }
+
+        button.fade:hover {
+            opacity: 0.8;
+        }
+
+        .fade {
+            opacity: 0.2;
+            top: 0;
+            left: 0;
+            transform: translate(0, 0);
+        }
+
+        body {
+            background-image: url("images/bgfinal.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: 'Goldman', cursive;
+        }
+
+        .left {
+            display: inline-block;
+            position: absolute;
+            left: 42px;
+            top: 10px;
+
+        }
+
+        .left img {
+            width: 320px;
+            height: 182px;
+        }
+
+        #hp1,
+        #hp2 {
+
+            color: white;
+            text-shadow: 3px 2px 1px black;
+            background-image: url("https://opengameart.org/sites/default/files/SAOHealth.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 283px 118px;
+            font-size: 25px;
+            text-align: right;
+            margin: 10px 10px;
+            padding: 1px 1px;
+        }
+
+        th,
+        td {
+            padding: 20px 80px;
+            margin: 20px 10px;
+        }
+
+        .btn {
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 14px;
+            padding: 5px 5px;
+            margin: 5px 5px;
+            display: block;
+            width: 100%;
+            color: black;
+            border: 2.5px solid blue;
+            background-color: rgb(248, 230, 218);
+
+        }
+
+        .btn:hover {
+            background-color: cyan;
+            color: black;
+        }
+
+        p {
+            font-size: 20px;
+            font-family: 'Goldman', cursive;
+        }
+
+        table {
+            border: 4px solid white;
+            background-image: url(images/fightBG.jpg);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 100px;
+            height: 100px;
+        }
+
+        table.table {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (max-width: 1230px) {
+            .left img {
+                width: 210px;
+                height: 130px;
+                margin-top: -15px;
+            }
+
+            .left {
+                display: block;
+                top: 0;
+                left: 0;
+            }
+
+            
+            table.table {
+                margin: 10px 5px;
+                margin-top: 98px;
+
+            }
+
+
+            .table {
+                height: 100px;
+                width: 100px;
+            }
+
+            th,
+            td {
+                padding: 0px 38px;
+                margin: 10px 30px;
+                height: 170px;
+            }
+
+            .header {
+                width: 10px;
+                height: 600px;
+            }
+
+            #button {
+                display: none;
+            }
+
+            #comment {
+                height: 10px;
+                padding: 10px 10px;
+            }
+
+            p {
+                font-size: 17px;
+                margin: 0px 0px;
+                padding: 0px 0px;
+                text-align: center;
+            }
+
+            .btn {
+                width: 200%;
+                text-align: center;
+                color: rgb(31, 31, 31);
+
+
+            }
+            
+        }
+    </style>
+
+    <script>
+        const button = document.querySelector("#button");
+        const icon = document.querySelector("#button > i");
+        const audio = document.querySelector("audio");
+
+        button.addEventListener("click", () => {
+            if (audio.paused) {
+                audio.volume = 0.6;
+                audio.play();
+                icon.classList.remove('fa-volume-up');
+                icon.classList.add('fa-volume-mute');
+
+            } else {
+                audio.pause();
+                icon.classList.remove('fa-volume-mute');
+                icon.classList.add('fa-volume-up');
+            }
+            button.classList.add("fade");
+        });
+
+
+        class Pokemon {
+            constructor(name, sprite, hp, moves) {
+                this.name = name;
+                this.sprite = sprite;
+                this.hp = hp;
+                this.fullhp = hp;
+                this.moves = moves;
+            }
+        }
+
+        let pkmList = [
+            ['Charizard', 'images/charizard.gif', 360, [
+                ['Flamethrower', 'fire', 95, 0.95],
+                ['Dragon Claw', 'dragon', 80, 0.95],
+                ['Air slash', 'fly', 75, 0.85],
+                ['Take down', 'normal', 60, 0.90]
+            ]],
+            ['Blastoise', 'images/blastoise.gif', 362, [
+                ['Surf', 'water', 90, 0.95],
+                ['Crunch', 'normal', 80, 0.95],
+                ['Ice punch', 'ice', 75, 0.95],
+                ['Flash cannon', 'steel', 80, 0.95]
+            ]],
+            ['Venusaur', 'images/venusaur.gif', 364, [
+                ['Petal Blizzard', 'grass', 90, 0.95],
+                ['Sludge bomb', 'poison', 90, 0.95],
+                ['Earthquake', 'ground', 100, 0.95],
+                ['Body Slam', 'normal', 85, 0.95]
+            ]],
+            ['Pikachu', 'images/pikachu.gif', 361, [
+                ['Thunderbolt', 'elctric', 90, 0.95],
+                ['Iron tail', 'steel', 90, 0.80],
+                ['Volt tackle', 'electric', 100, 0.95],
+                ['Quick attack', 'normal', 45, 0.95]
+            ]],
+            ['Arcanine', 'images/arcanine.gif', 366, [
+                ['Flare blitz', 'fire', 90, 0.95],
+                ['Extreme speed', 'normal', 90, 0.80],
+                ['Flame burst', 'fire', 85, 0.95],
+                ['Earth power', 'ground', 90, 0.95]
+            ]],
+            ['Alakazam', 'images/alakazam-mega.gif', 354, [
+                ['Psychic', 'psy', 90, 0.95],
+                ['Confusion', 'psy', 90, 0.80],
+                ['Shadow ball', 'psy', 85, 0.95],
+                ['Frustration', 'normal', 90, 0.95]
+            ]],
+            ['Rapidash', 'images/rapidash.gif', 358, [
+                ['Flame wheel', 'fire', 70, 0.85],
+                ['Fire spin', 'fire', 40, 0.80],
+                ['Earthquake', 'ground', 100, 0.95],
+                ['Fire Blast', 'fire', 120, 0.95]
+            ]],
+            ['Sceptile', 'images/sceptile.gif', 350, [
+                ['Leaf blade', 'grass', 70, 0.85],
+                ['Absord', 'grass', 35, 0.80],
+                ['Dragon pulse', 'dragon', 100, 0.95],
+                ['Bullet seed', 'grass', 50, 0.95]
+            ]],
+            ['Feraligatr', 'images/feraligatr.gif', 360, [
+                ['Waterfall', 'water', 70, 0.85],
+                ['Surf', 'water', 85, 0.80],
+                ['Strength', 'normal', 80, 0.95],
+                ['Ice beam', 'ice', 65, 0.95]
+            ]],
+            ['Ludicolo', 'images/ludicolo.gif', 360, [
+                ['Water gun', 'water', 50, 0.85],
+                ['Slash', 'normal', 70, 0.80],
+                ['Lazer leaf', 'grass', 50, 0.95],
+                ['Ice shard', 'ice', 65, 0.95]
+            ]],
+            ['Aggron', 'images/aggron.gif', 366, [
+                ['Stone edge', 'ground', 80, 0.85],
+                ['Iron tail', 'steel', 70, 0.80],
+                ['Earthquake', 'ground', 100, 0.95],
+                ['Fire punch', 'fire', 65, 0.95]
+            ]],
+            ['Lucario', 'images/lucario-mega.gif', 360, [
+                ['Aura Sphere', 'fight', 80, 0.85],
+                ['Bone rush', 'ground', 40, 0.80],
+                ['Bullet punch', 'steel', 65, 0.95],
+                ['karate chop', 'fight', 60, 0.95]
+            ]],
+            ['Infernape', 'images/infernape.gif', 352, [
+                ['Flamethrower', 'fire', 80, 0.85],
+                ['Thunder punch', 'electric', 60, 0.80],
+                ['Low sweep', 'fight', 65, 0.95],
+                ['Close combat', 'fight', 80, 0.95]
+            ]],
+            ['Garchomp', 'images/garchomp.gif', 380, [
+                ['Meteor shower', 'dragon', 80, 0.85],
+                ['Dragon pulse', 'dragon', 80, 0.80],
+                ['Earth power', 'ground', 70, 0.95],
+                ['Crunch', 'psy', 55, 0.95]
+            ]],
+            ['Drapion', 'images/drapion.gif', 366, [
+                ['Sting attack', 'poison', 70, 0.85],
+                ['Sludge wave', 'poison', 85, 0.80],
+                ['Fire fang', 'fire', 75, 0.95],
+                ['Bounce', 'fly', 60, 0.95]
+            ]],
+            ['Golbat', 'images/golbat.gif', 354, [
+                ['Wing attack', 'fly', 70, 0.85],
+                ['Areial ace', 'fly', 85, 0.80],
+                ['Poison Sting', 'poison', 75, 0.95],
+                ['Psybeam', 'psy', 60, 0.95]
+            ]]
+        ];
+
+        let typeMatch = {
+            'Charizard': [
+                ['ground'],
+                ['water', 'electric'],
+                ['fire', 'grass', 'steel']
+            ],
+            'Blastoise': [
+                [''],
+                ['grass', 'electric'],
+                ['fire', 'water']
+            ],
+            'Feraligatr': [
+                [''],
+                ['grass', 'electric'],
+                ['fire', 'water', 'poison']
+            ],
+            'Ludicolo': [
+                [''],
+                ['electric', 'fly', 'poison'],
+                ['fire', 'water', 'grass']
+            ],
+            'Venusaur': [
+                [''],
+                ['fire', 'fly', 'ice', 'psy'],
+                ['grass', 'water']
+            ],
+            'Sceptile': [
+                ['electric'],
+                ['fire', 'fly', 'ice', 'poison'],
+                ['grass', 'water']
+            ],
+            'Pikachu': [
+                [''],
+                ['ground'],
+                ['grass', 'steel', 'psy']
+            ],
+            'Arcanine': [
+                [''],
+                ['ground', 'water'],
+                ['fire', 'steel', 'grass', 'ice']
+            ],
+            'Rapidash': [
+                [''],
+                ['ground', 'water'],
+                ['fire', 'steel', 'grass', 'ice']
+            ],
+            'Infernape': [
+                [''],
+                ['ground', 'water', 'psy', 'fly'],
+                ['fire', 'steel', 'grass', 'ice']
+            ],
+            'Lucario': [
+                ['poison'],
+                ['ground', 'fire', 'psy', 'fight'],
+                ['steel', 'steel', 'grass']
+            ],
+            'Aggron': [
+                ['electric', 'poison'],
+                ['ground', 'fire', 'fight', 'water'],
+                ['psy', 'steel', 'grass']
+            ],
+            'Drapion': [
+                ['poison'],
+                ['ground', 'fire', 'psy', 'fly'],
+                ['water', 'steel', 'grass']
+            ],
+            'Golbat': [
+                ['ground'],
+                ['electric', 'psy', 'ice'],
+                ['water', 'steel', 'grass', 'fight']
+            ],
+            'Garchomp': [
+                ['electric'],
+                ['dragon', 'ice'],
+                ['water', 'fire', 'grass', 'fight', 'steel']
+            ],
+            'Alakazam': [
+                ['ground'],
+                ['psy', 'poison'],
+                ['steel', 'fight']
+            ]
+        }
+
+        function spawn(bool) {
+            let p = pkmList[Math.floor(Math.random() * pkmList.length)];
+            let pkm = new Pokemon(p[0], p[1], p[2], p[3]);
+
+            if (bool) {
+                for (i = 0; i < 4; i++) {
+                    document.getElementById('m' + i).value = pkm.moves[i][0];
+                }
+            }
+            return pkm;
+
+        }
+
+        let pk1 = spawn(true);
+        s1 = document.createElement('img');
+        s1.src = pk1.sprite;
+        document.getElementById('pk1').appendChild(s1);
+        document.getElementById('hp1').innerHTML = '<p>HP: ' + pk1.hp + '/' + pk1.fullhp + '</p>';
+
+
+        let pk2 = spawn(false);
+        s2 = document.createElement('img');
+        s2.src = pk2.sprite;
+        document.getElementById('pk2').appendChild(s2);
+        document.getElementById('hp2').innerHTML = '<p>HP: ' + pk2.hp + '/' + pk2.fullhp + '</p>';
+
+        for (i = 0; i < 4; i++) {
+            let btn = document.getElementById('m' + i);
+            let move = pk1.moves[i];
+
+            function addHandler(btn, move, pk1, pk2) {
+                btn.addEventListener('click', function (e) {
+                    attack(move, pk1, pk2, 'hp2', '');
+                    setTimeout(attack, 2000, pk2.moves[Math.floor(Math.random() * 3)], pk2, pk1, 'hp1', 'Foe ');
+                });
+
+            }
+            addHandler(btn, move, pk1, pk2);
+        }
+
+
+
+        function attack(move, attacker, receiver, hp, owner) {
+            document.getElementById('comment').innerHTML = '<p>' + owner + attacker.name + ' used ' + move[0] + '!</p>';
+            if (Math.random() < move[3]) {
+                let power = move[2] += Math.floor(Math.random() * 10);
+                let rtype = typeMatch[receiver.name];
+                let mtype = move[1];
+                let scale = 1;
+
+                for (i = 0; i < rtype.length; i++) {
+                    if (rtype[i].includes(mtype)) {
+                        switch (i) {
+                            case 0:
+                                scale = 0;
+                                setTimeout(function () {
+                                    document.getElementById('comment').innerHTML = '<p>It had no effect!</p>';
+                                }, 1000);
+                                break;
+                            case 1:
+                                scale = 2;
+                                setTimeout(function () {
+                                    document.getElementById('comment').innerHTML = '<p>It was super effective!</p>';
+                                }, 1000);
+                                break;
+                            case 2:
+                                scale = 0.5;
+                                setTimeout(function () {
+                                    document.getElementById('comment').innerHTML = '<p>It was not very effective!</p>';
+                                }, 1000);
+                                break;
+                        }
+                        break;
+                    }
+                }
+                power *= scale;
+                receiver.hp -= Math.floor(power);
+                document.getElementById(hp).innerHTML = '<p>HP: ' + receiver.hp + '/' + receiver.fullhp + '</p>';
+            } else {
+                setTimeout(function () {
+                    document.getElementById('comment').innerHTML = '<p>Attack missed!</p>';
+                })
+            }
+            checkWinner(hp);
+
+
+        }
+
+
+        function checkWinner(hp) {
+            let f = (pk1.hp <= 0) ? pk1 : (pk2.hp <= 0) ? pk2 : false;
+            if (f != false) {
+                alert('GAME OVER: ' + f.name + ' fainted!');
+                document.getElementById(hp).innerHTML = '<p>HP: 0/' + f.fullhp + '</p>';
+                setTimeout(function () {
+                    location.reload();
+                }, 1500)
+            }
+
+        }
+    </script>
