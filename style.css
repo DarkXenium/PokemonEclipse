@@ -285,54 +285,75 @@ p {
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
-@media (max-width: 1230px) {
-  .left img {
-    width: 210px;
-    height: 130px;
-    margin-top: -15px;
-  }
-
+@media (max-width: 450px) {
   .left {
-    display: block;
-    top: 0;
-    left: 0;
+    left: 1vmin;
   }
-
-  table.table {
-    margin: 10px 5px;
-    margin-top: 98px;
-  }
-
-  .table {
-    height: 100px;
-    width: 100px;
-  }
-
-  th,
-  td {
-    padding: 0px 38px;
-    margin: 10px 30px;
-    height: 170px;
-  }
-
-  .header {
-    width: 10px;
-    height: 600px;
-  }
-
-  #comment {
-    height: 10px;
-    padding: 10px 10px;
-  }
-
-  p {
-    font-size: 17px;
-    margin: 0px 0px;
-    padding: 0px 0px;
-    text-align: center;
-  }
-
-  footer {
+  .audioText {
     display: none;
+  }
+  .pokemonContainer {
+    height: 74vh;
+    width: 90vw;
+  }
+  .moveSet {
+    border-radius: 9vmin;
+    position: absolute;
+    bottom: 25vmax;
+    right: 0;
+    justify-content: center;
+    display: flex;
+    position: absolute;
+    left: 1vmin;
+  }
+  #moveSet {
+    position: absolute;
+    left: 4vmax;
+    bottom: 6vmax;
+  }
+  .btn {
+    margin: 5px 2px 7px 1px;
+    font-size: 14px;
+    color: white;
+    background: #555555;
+  }
+  #hp1,
+  #hp2 {
+    bottom: 7vmax;
+    right: 6vmax;
+  }
+  #hp2 {
+    right: 2vmax;
+  }
+  .healthBar {
+    position: relative;
+    left: 4vmin;
+  }
+  .comments {
+    background: white;
+    font-size: 14px;
+    padding: 2px 2px;
+    position: absolute;
+    bottom: 40vmax;
+    border-radius: 26px;
+  }
+  footer {
+    width: 64%;
+  }
+  .postGame {
+    z-index: 1;
+    width: 77%;
+    height: 15%;
+    left: 13vmin;
+  }
+  #restart {
+    left: 14vmax;
+  }
+  .winningMessage {
+    position: relative;
+    left: 1vmin;
+  }
+  html {
+    overflow: hidden;
   }
 }
