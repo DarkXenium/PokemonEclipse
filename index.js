@@ -152,6 +152,8 @@ function attack(move, attacker, receiver, hp, owner) {
             break;
         }
         break;
+      } else {
+        document.getElementById("normal").play();
       }
     }
     power *= scale;
